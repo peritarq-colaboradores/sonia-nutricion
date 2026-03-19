@@ -5,14 +5,13 @@ import { usePathname } from "next/navigation";
 import {
   LayoutDashboard,
   Users,
-  ClipboardList,
-  Activity,
   BookOpen,
   Calendar,
   FileText,
   LogOut,
   Leaf,
   ChevronRight,
+  X,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -24,14 +23,19 @@ interface NavItem {
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { href: "/dashboard",  label: "Inicio",       icon: LayoutDashboard, exact: true },
-  { href: "/pacientes",  label: "Pacientes",    icon: Users },
-  { href: "/recetas",    label: "Recetas",      icon: BookOpen },
-  { href: "/planes",     label: "Planes",       icon: Calendar },
-  { href: "/informes",   label: "Informes",     icon: FileText },
+  { href: "/dashboard",  label: "Inicio",    icon: LayoutDashboard, exact: true },
+  { href: "/pacientes",  label: "Pacientes", icon: Users },
+  { href: "/recetas",    label: "Recetas",   icon: BookOpen },
+  { href: "/planes",     label: "Planes",    icon: Calendar },
+  { href: "/informes",   label: "Informes",  icon: FileText },
 ];
 
-export default function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export default function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   const isActive = (item: NavItem) => {
@@ -40,16 +44,32 @@ export default function Sidebar() {
   };
 
   return (
-    <aside className="sidebar fixed left-0 top-0 h-full w-64 bg-white border-r border-warm-100 flex flex-col z-30 shadow-sm">
+    <aside
+      className={cn(
+        "fixed left-0 top-0 h-full w-64 bg-white border-r border-warm-100 flex flex-col z-30 shadow-sm transition-transform duration-200",
+        // Desktop: siempre visible. Móvil: visible solo si isOpen
+        "md:translate-x-0",
+        isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+      )}
+    >
       {/* Logo / Marca */}
-      <div className="flex items-center gap-3 px-6 py-5 border-b border-warm-100">
-        <div className="w-9 h-9 rounded-xl bg-sage-500 flex items-center justify-center shadow-sm">
-          <Leaf className="w-5 h-5 text-white" />
+      <div className="flex items-center justify-between px-6 py-5 border-b border-warm-100">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-xl bg-sage-500 flex items-center justify-center shadow-sm">
+            <Leaf className="w-5 h-5 text-white" />
+          </div>
+          <div>
+            <p className="font-semibold text-warm-900 text-sm leading-tight">Sonia Nutrición</p>
+            <p className="text-xs text-warm-400 leading-tight">Herramienta profesional</p>
+          </div>
         </div>
-        <div>
-          <p className="font-semibold text-warm-900 text-sm leading-tight">Sonia Nutrición</p>
-          <p className="text-xs text-warm-400 leading-tight">Herramienta profesional</p>
-        </div>
+        {/* Cerrar en móvil */}
+        <button
+          className="md:hidden w-7 h-7 flex items-center justify-center rounded-lg text-warm-400 hover:text-warm-600"
+          onClick={onClose}
+        >
+          <X className="w-4 h-4" />
+        </button>
       </div>
 
       {/* Navegación principal */}
@@ -60,6 +80,7 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onClose}
               className={cn(
                 "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group",
                 active
@@ -69,7 +90,7 @@ export default function Sidebar() {
             >
               <item.icon
                 className={cn(
-                  "w-4.5 h-4.5 flex-shrink-0",
+                  "w-4 h-4 flex-shrink-0",
                   active ? "text-white" : "text-warm-400 group-hover:text-warm-600"
                 )}
               />
@@ -89,6 +110,7 @@ export default function Sidebar() {
           <div className="space-y-0.5">
             <Link
               href="/pacientes/nuevo"
+              onClick={onClose}
               className="flex items-center gap-2 text-xs text-warm-500 hover:text-sage-600 py-1 transition-colors"
             >
               <Users className="w-3.5 h-3.5" />
@@ -96,6 +118,7 @@ export default function Sidebar() {
             </Link>
             <Link
               href="/recetas/nueva"
+              onClick={onClose}
               className="flex items-center gap-2 text-xs text-warm-500 hover:text-sage-600 py-1 transition-colors"
             >
               <BookOpen className="w-3.5 h-3.5" />

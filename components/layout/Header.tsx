@@ -24,8 +24,8 @@ export default function Header({ title, subtitle, actions }: HeaderProps) {
   return (
     <header className="no-print sticky top-0 z-20 bg-white/80 backdrop-blur-sm border-b border-warm-100 px-6 py-3.5">
       <div className="flex items-center justify-between gap-4">
-        {/* Título de página */}
-        <div className="min-w-0 flex-1">
+        {/* Título de página — pl-12 en móvil para no solapar con el hamburguesa */}
+        <div className="min-w-0 flex-1 pl-10 md:pl-0">
           {title && (
             <div>
               <h1 className="text-xl font-semibold text-warm-900 truncate">{title}</h1>
