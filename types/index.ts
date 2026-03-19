@@ -89,6 +89,8 @@ export interface Medicion {
 export type TipoComida = 'desayuno' | 'media_manana' | 'comida' | 'merienda' | 'cena' | 'snack'
 export type MomentoComida = 'desayuno' | 'media_manana' | 'comida' | 'merienda' | 'cena'
 export type DiaSemana = 'lunes' | 'martes' | 'miercoles' | 'jueves' | 'viernes' | 'sabado' | 'domingo'
+export type NivelActividad = 'sedentario' | 'ligero' | 'moderado' | 'activo' | 'muy_activo'
+export type Sexo = 'masculino' | 'femenino' | 'otro'
 
 export interface Receta {
   id: string
