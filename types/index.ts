@@ -91,6 +91,12 @@ export type MomentoComida = 'desayuno' | 'media_manana' | 'comida' | 'merienda' 
 export type DiaSemana = 'lunes' | 'martes' | 'miercoles' | 'jueves' | 'viernes' | 'sabado' | 'domingo'
 export type NivelActividad = 'sedentario' | 'ligero' | 'moderado' | 'activo' | 'muy_activo'
 export type Sexo = 'masculino' | 'femenino' | 'otro'
+export type EtiquetaReceta = 'alta_proteina' | 'saciante' | 'rapida' | 'digestiva' | 'batch_cooking' | 'baja_carga_glucemica' | 'antiinflamatoria' | 'apta_balon' | 'vegetariana' | 'vegana' | 'sin_gluten' | 'sin_lacteos' | 'tupper' | 'pocos_ingredientes' | 'economica'
+
+export interface SelectOption {
+  value: string
+  label: string
+}
 
 export interface Receta {
   id: string
